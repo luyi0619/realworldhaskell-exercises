@@ -72,7 +72,7 @@ main = mainWith myFunction
         myFunction = unlines . trans . lines
 
 
-minLen = foldr (\x acc -> if acc == -1 then length x else min (length x) acc) (-1)
+minLen = foldr (\x acc -> min (length x) acc) (maxBound :: Int)
 
 transpose n input | n == 0 = [] 
                   | n /= 0 = (map head input) :  (transpose (n - 1) (map tail input))
