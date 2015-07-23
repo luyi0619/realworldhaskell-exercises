@@ -1,5 +1,5 @@
 -- 4.2.1 Use a fold (choosing the appropriate fold will make your code much simpler) to rewrite and improve upon the asInt function from the section called “Explicit recursion”.
-import Data.Char (digitToInt, isDigit)
+import Data.Char (digitToInt, isDigit, isSpace)
 
 asInt_fold :: String -> Int
 
@@ -61,4 +61,19 @@ groupBy' f = foldr step []
 
 any' f = foldl (\acc x -> acc || (f x) ) False 
 
+cycle' [] = error "empty list"
+cycle' xs = foldr step [] [1..]
+                where step x acc = xs ++ acc
 
+words' :: String -> [String]
+
+words' = foldr step [[]]
+            where step x acc
+                    | isSpace x = if null (head acc) then acc else [] : acc 
+                    | otherwise = let lastword = head acc
+                                  in  (x : lastword) : (tail acc)
+
+unlines' :: [String] -> String
+
+unlines' = foldr (\x acc -> x ++ "\n" ++ acc) []
+ 
